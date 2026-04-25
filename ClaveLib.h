@@ -1,4 +1,4 @@
-#ifndef CLAVELIB_H
+#ifndef CLAVELIB_H 
 #define CLAVELIB_H
 #include <iostream>
 #include <string>

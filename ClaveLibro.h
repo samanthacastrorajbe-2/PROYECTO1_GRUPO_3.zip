@@ -1,27 +1,27 @@
-#ifndef CLAVELIB_H 
-#define CLAVELIB_H
+#ifndef CLAVELIBRO_H 
+#define CLAVELIBRO_H
 #include <iostream>
 #include <string>
 
 /*
-* struct ClaveLib
+* struct ClaveLibro
 * Descripción: Estructura para representar una clave de biblioteca
 * autor es el autor del libro
 * titulo es el título del libro
 * Precondición: autor debe seguir las reglas sintácticas sobre un autor
 * Postcondición: Devuelve un objeto tipo ClaveLib (una estructura con el autor y título del libro)
 */
-struct ClaveLib {
+struct ClaveLibro {
     std::string autor, titulo; 
 };
 
 /*
-* crear_clave_lib()
+* crear_clave_libro()
 * Descripción: Crea una una nueva clave libro a partir de la entrada del usuario
 * Precondición: true 
 * Postcondición: devuelve el Autor de clave
 */
-ClaveLib crear_clave_lib();
+ClaveLibro crear_clave_libro();
 
 /* 
 * autor_clave(clave)
@@ -30,7 +30,7 @@ ClaveLib crear_clave_lib();
 * Precondición: true
 * Postcondición: Devuelve el autor de la clave
 */
-std::string autor_clave (const ClaveLib& clave);
+std::string autor_clave (const ClaveLibro& clave);
 
 /* 
 * titulo_clave(clave)
@@ -39,7 +39,7 @@ std::string autor_clave (const ClaveLib& clave);
 * Precondición: true
 * Postcondición: Devuelve el título de la clave
 */
-std::string titulo_clave (const ClaveLib& clave);
+std::string titulo_clave (const ClaveLibro& clave);
 
 /* 
 * compara_claves(clave1, clave2)
@@ -49,7 +49,7 @@ std::string titulo_clave (const ClaveLib& clave);
 * Precondición: true
 * Postcondición: devuelve -1 si clave1 es menor que clave2, devuelve 0 si son iguales y devuelve 1 si clave1 es mayor que clave2. El orden que se utiliza es el orden lexicográfico. Si dos claves tienen los mismos autores, una será menor que la otra si el título es menor lexicigráficamente que la otra
 */
-unsigned short compara_claves(const ClaveLib& clave1, const ClaveLib& clave2);
+unsigned short compara_claves(const ClaveLibro& clave1, const ClaveLibro& clave2);
 
 
 #endif

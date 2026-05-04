@@ -23,6 +23,23 @@ struct Libro {
     int num_ejem; 
 };
 
+/* 
+* crear_libro(autor, titulo, año, area, editorial, num_ejem)
+* Descripción: Crea un nuevo libro con los datos proporcionados
+* autor es el autor del libro
+* titulo es el título del libro
+* año es el año de publicación del libro
+* area es el área a la que pertenece el libro
+* editorial es la editorial del libro
+* num_ejem es el número de ejemplares del libro que hay en la biblioteca
+* Precondición: autor debe seguir las reglas sintácticas sobre un autor
+*               area debe ser un área válida de la biblioteca
+*               año debe ser un año válido, no puede ser un año futuro
+* Postcondición: Devuelve un objeto tipo libro (una estructura con el autor, título, año, área, editorial y número de ejemplares del libro)
+*/
+Libro crear_libro (std::string autor, std::string titulo, std::string año, std::string area, std::string editorial, unsigned short num_ejem);
+
+
 /*
 * autor_libro(libro)
 * Descripción: Obtiene el autor de un libro

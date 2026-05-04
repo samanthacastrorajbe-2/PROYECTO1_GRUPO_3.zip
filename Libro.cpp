@@ -40,7 +40,7 @@ ClaveLibro clave_libro (const Libro& libro){
 
 // desarrollar
 
-void num_ejem (const Libro& libro, unsigned short ejem);a 
+void num_ejem (const Libro& libro, unsigned short ejem); 
 // desarrollar
 
 bool es_clave (const Libro& libro, ClaveLibro clave); 

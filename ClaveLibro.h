@@ -18,14 +18,16 @@ struct ClaveLibro {
 /*
 * crear_clave_libro()
 * Descripción: Crea una una nueva clave libro a partir de la entrada del usuario
+* autor es el autor del libro
+* titulo es el título del libro
 * Precondición: true 
 * Postcondición: devuelve el Autor de clave
 */
-ClaveLibro crear_clave_libro();
+ClaveLibro crear_clave_libro(std::string autor, std::string titulo);
 
 /* 
 * autor_clave(clave)
-* Descripción: !!!!!!!!!!!!!!!!!!!!!!
+* Descripción: Devuelve el autor de una clave de libro
 * clave es la clave de la que se quiere obtener el autor
 * Precondición: true
 * Postcondición: Devuelve el autor de la clave
@@ -34,7 +36,7 @@ std::string autor_clave (const ClaveLibro& clave);
 
 /* 
 * titulo_clave(clave)
-* Descripción: !!!!!!!!!!!!!!!!!!!!!
+* Descripción: Devuelve el título de una clave de libro
 * clave es la clave de la que se quiere obtener el título
 * Precondición: true
 * Postcondición: Devuelve el título de la clave
@@ -49,7 +51,7 @@ std::string titulo_clave (const ClaveLibro& clave);
 * Precondición: true
 * Postcondición: devuelve -1 si clave1 es menor que clave2, devuelve 0 si son iguales y devuelve 1 si clave1 es mayor que clave2. El orden que se utiliza es el orden lexicográfico. Si dos claves tienen los mismos autores, una será menor que la otra si el título es menor lexicigráficamente que la otra
 */
-unsigned short compara_claves(const ClaveLibro& clave1, const ClaveLibro& clave2);
+short compara_claves(const ClaveLibro& clave1, const ClaveLibro& clave2);
 
 
 #endif

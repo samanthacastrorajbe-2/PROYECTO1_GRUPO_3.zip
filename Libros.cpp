@@ -53,7 +53,16 @@ Libro obtener_libro (const Libros& libros, const ClaveLibro& clave){
 * Precondición: true
 * Postcondición: devuelve true si el libro cuya clave es clave está en libros
 */
-bool esta_libro (const Libros& libros, const ClaveLibro& clave) ;
+bool esta_libro (const Libros& libros, const ClaveLibro& clave) {
+    NodoLibro* actual = libros.primero; // Empezamos a recorrer la lista desde el primer nodo
+    while (actual != nullptr) { // Mientras no lleguemos al final de la lista
+        if (es_clave(actual->data, clave)) { // Si la clave del libro actual es igual a la clave que estamos buscando
+            return true; // Devolvemos true si encontramos un libro con la clave dada
+        }
+        actual = actual->proximo; // Avanzamos al siguiente nodo
+    }
+    return false; // Si el bucle termina, significa que no se encontró la clave, entonces devolvemos false
+}
 
 /*
 * eliminar_libro()

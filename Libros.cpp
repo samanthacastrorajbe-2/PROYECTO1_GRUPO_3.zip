@@ -72,7 +72,25 @@ bool esta_libro (const Libros& libros, const ClaveLibro& clave) {
 * Precondición: true
 * Postcondición: Se elimina el libro de libros cuya clave es clave
 */
-void eliminar_libro (Libros& libros, const ClaveLibro& clave); 
+void eliminar_libro (Libros& libros, const ClaveLibro& clave){
+    NodoLibro* actual = libros.primero; // Empezamos a recorrer la lista desde el primer nodo
+    NodoLibro* anterior = nullptr; // Para mantener un puntero al nodo anterior, que inicialmente es nullptr
+    while (actual != nullptr) { // Mientras no lleguemos al final de la lista
+        if (es_clave(actual->data, clave)) { // Si la clave del libro actual es igual a la clave que estamos buscando
+            if (anterior == nullptr) { // Si el nodo a eliminar es el primero de la lista
+                libros.primero = actual->proximo; // El primer nodo ahora será el siguiente del nodo actual
+            } else { // Si el nodo a eliminar no es el primero de la lista
+                anterior->proximo = actual->proximo; // El nodo anterior ahora apunta al siguiente del nodo actual, saltándose el nodo actual
+            }
+            delete actual; // Liberamos la memoria del nodo que contiene el libro a eliminar
+            libros.cantidad--; // Le quitamos 1 a la cantidad de libros en el conjunto
+            return; // Salimos de la función después de eliminar el libro
+        }
+        anterior = actual; // Actualizamos el nodo anterior al nodo actual antes de avanzar
+        actual = actual->proximo; // Avanzamos al siguiente nodo
+    }
+    std::cout << "No se encontraron libros con esta clave: " << "\n"<< "Autor: " << clave.autor << "\n"<< "Titulo: " << clave.titulo<< std::endl; 
+} 
 
 /*
 * hay_ejemplares()

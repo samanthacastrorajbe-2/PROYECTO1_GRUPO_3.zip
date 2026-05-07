@@ -38,13 +38,23 @@ ClaveLibro clave_libro (const Libro& libro){
 } //probar
 // no se donde debo validar que el autor siga las reglas sintacticas que pide el profe 
 
-// desarrollar
 
-void num_ejem (const Libro& libro, unsigned short ejem); 
-// desarrollar
+void num_ejem (Libro& libro, unsigned short ejem){
+    libro.num_ejem = ejem;
+}
 
-bool es_clave (const Libro& libro, ClaveLibro clave); 
-// desarrollar
 
-void destruir_libro (Libro& libro); 
-// desarrollar
+bool es_clave (const Libro& libro, ClaveLibro clave){
+    if (clave.autor == libro.autor && clave.titulo == libro.titulo){
+        return true;
+    }
+    else {
+        return false;
+    }
+} 
+
+
+void destruir_libro (Libro& libro){
+    delete &libro;
+}
+

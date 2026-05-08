@@ -1,4 +1,8 @@
-#include "Libros.h"
+#include "Libros.h" 
+
+// OJO REVISAR QUE ESTEN BIEN Y FUNCIONEN TODAS LAS FUNCIONES
+
+
 /*
 * crear_conj_libros()
 * Descripción: Crea un conjunto (lista) vacío de libros
@@ -6,10 +10,10 @@
 * Postcondición:devuelve un conjunto vacío de libros 
 */
 Libros crear_conj_libros ( ){
-    Libros libros;
+    Libros libros; // Declaramos una variable de tipo Libros llamada libros
     libros.primero = nullptr; // Como la lista está vacía, el primer apuntador apunta a nullptr
     libros.cantidad = 0; // No hay libros en el conjunto, entonces la cantidad es 0
-    return libros;
+    return libros; // Retornamos el conjunto de libros recién creado
 } 
 
 /*
@@ -40,8 +44,7 @@ Libro obtener_libro (const Libros& libros, const ClaveLibro& clave){
         actual = actual->proximo; // Avanzamos al siguiente nodo
     }
     // Si el bucle termina, significa que no se encontró la clave
-    std::cout << "No se encontraron libros con esta clave: " << "\n"<< "Autor: " << clave.autor << "\n"<< "Titulo: " << clave.titulo<< std::endl;
-    return Libro();
+    return Libro(); // Devolvemos un libro vacío por defecto
 
 }
 
@@ -111,7 +114,28 @@ bool hay_ejemplares (const Libros& libros, const ClaveLibro& clave);
 * Precondición: debe existir al menos un ejemplar en libros con esta clave
 * Postcondición: Se elimina un ejemplar del libro cuya clave es clave
 */
-void eliminar_ejemplar (Libros& libros, const ClaveLibro& clave); 
+void eliminar_ejemplar (Libros& libros, const ClaveLibro& clave){
+    NodoLibro* actual = libros.primero; // Empezamos a recorrer la lista desde el primer nodo
+    NodoLibro* anterior = nullptr; // Guardamos el nodo anterior para poder eliminar el nodo actual si es necesario
+
+    while (actual != nullptr) { // Mientras no estemos al final de la lista
+        if (compara_claves(clave_libro(actual->data), clave) == 0) { // Si la clave del libro actual coincide con la clave buscada
+            unsigned short cant = num_ejem(actual->data); // Obtenemos la cantidad de ejemplares del libro actual
+            if (cant > 1) { // Si hay más de un ejemplar
+                num_ejem(actual->data, cant - 1); // Reducimos la cantidad de ejemplares en uno
+            } else { // Si es el último ejemplar disponible
+                if (anterior == nullptr) libros.primero = actual->proximo; // Si el nodo a eliminar es el primero, actualizamos el primer nodo
+                else anterior->proximo = actual->proximo; // Si no es el primero, el nodo anterior salta al siguiente
+                
+                delete actual; // Liberamos la memoria del nodo eliminado
+                libros.cantidad--; // Disminuimos la cantidad de libros en el conjunto porque se eliminó el libro completo
+            }
+            return; // Salimos porque ya se procesó la eliminación
+        }
+        anterior = actual; // Actualizamos el nodo anterior antes de avanzar
+        actual = actual->proximo; // Avanzamos al siguiente nodo
+    }
+} 
 
 
 /*
@@ -122,7 +146,36 @@ void eliminar_ejemplar (Libros& libros, const ClaveLibro& clave);
 * Precondición: true
 * Postcondición: Se inserta libro en libros. Al ser libros un conjunto no se puede insertar un libro que ya exista en libros, es decir, con igual clave que la de libro
 */
-void insertar_libro (Libros& libros, const Libro& libro); 
+void insertar_libro (Libros& libros, const Libro& libro){
+    // Debe ser un conjunto (no repetidos) y el orden es IMPORTANTE
+    ClaveLibro nueva_clave = clave_libro(libro); // Obtenemos la clave del libro que queremos insertar
+    
+    NodoLibro* nuevo = new NodoLibro; // Creamos un nuevo nodo para insertar el libro
+    nuevo->data = libro; // Guardamos el libro en el nuevo nodo
+    
+    // Insetamos en lista vacía o al inicio (manteniendo el orden)
+    if (libros.primero == nullptr || compara_claves(nueva_clave, clave_libro(libros.primero->data)) == -1) {
+        nuevo->proximo = libros.primero; // El nuevo nodo apunta al nodo que actualmente es el primero
+        libros.primero = nuevo; // El nuevo nodo se convierte en el primer nodo
+    } else {
+        NodoLibro* actual = libros.primero; // Empezamos a buscar la posición correcta desde el primer nodo
+        // Avanzar hasta encontrar la posición correcta
+        while (actual->proximo != nullptr && compara_claves(nueva_clave, clave_libro(actual->proximo->data)) == 1) {
+            actual = actual->proximo; // Avanzamos al siguiente nodo mientras la nueva clave sea mayor
+        }
+        
+        // Verificar si ya existe (No se insertan duplicados en un conjunto)
+        if (actual->proximo != nullptr && compara_claves(nueva_clave, clave_libro(actual->proximo->data)) == 0) {
+            delete nuevo; // Liberamos el nodo creado porque el libro ya existe
+            return; // No insertamos duplicados
+        }
+        
+        nuevo->proximo = actual->proximo; // El nuevo nodo apunta al siguiente nodo en la posición correcta
+        actual->proximo = nuevo; // El nodo actual apunta ahora al nuevo nodo
+    }
+    libros.cantidad++; // Incrementamos la cantidad de libros en el conjunto
+}
+
 
 
 /*
@@ -133,7 +186,16 @@ void insertar_libro (Libros& libros, const Libro& libro);
 * Precondición: clave debe corresponder a un libro que esté en libros
 * Postcondición: Se suma 1 al número de ejemplares del libro cuya clave es clave
 */
-void insertar_ejemplar (Libros& libros, const ClaveLibro& clave); 
+void insertar_ejemplar (Libros& libros, const ClaveLibro& clave){
+    NodoLibro* actual = libros.primero; // Empezamos a recorrer la lista desde el primer nodo
+    while (actual != nullptr) { // Mientras no estemos al final de la lista
+        if (compara_claves(clave_libro(actual->data), clave) == 0) { // Si la clave del libro actual coincide con la clave buscada
+            num_ejem(actual->data, num_ejem(actual->data) + 1); // Incrementamos el número de ejemplares en uno
+            return; // Salimos porque ya actualizamos el libro
+        }
+        actual = actual->proximo; // Avanzamos al siguiente nodo
+    }
+}
 
 
  /*
@@ -143,4 +205,13 @@ void insertar_ejemplar (Libros& libros, const ClaveLibro& clave);
 * Precondición: true
 * Postcondición: elimina de memoria al objeto libros
 */
-void destruir_libros (Libros& libros); 
+void destruir_libros (Libros& libros){
+    NodoLibro* actual = libros.primero;
+    while (actual != nullptr) {
+        NodoLibro* siguiente = actual->proximo;
+        delete actual;
+        actual = siguiente;
+    }
+    libros.primero = nullptr;
+    libros.cantidad = 0;
+}

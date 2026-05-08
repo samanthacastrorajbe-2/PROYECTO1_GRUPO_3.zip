@@ -102,7 +102,7 @@ ClaveLibro clave_libro (const Libro& libro);
 * Precondición: true
 * Postcondición: Asigna ejem al número de ejemplares de libro
 */
-void num_ejem (const Libro& libro, unsigned short ejem); 
+void num_ejem (Libro& libro, unsigned short ejem); 
 
 /*
 * es_clave(libro, clave)

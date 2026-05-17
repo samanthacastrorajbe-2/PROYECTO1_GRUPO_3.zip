@@ -30,6 +30,47 @@ struct Libros {
     int cantidad;       // Para saber cuántos libros hay en total
 };
 
+/* 
+ -------------------------------------------------------
+ TDA Iterador_Libros
+ Permite recorrer los libros del conjunto de forma encapsulada.
+ El usuario no necesita conocer la estructura de NodoLibro.
+ ------------------------------------------------------- 
+ */
+struct Iterador_Libros {
+    NodoLibro* actual; // nodo actual al que apunta el iterador
+};
+ 
+// Operadores del TDA Iterador_Libros
+ 
+// Pre: it.actual != NULL
+// Post: devuelve referencia al Libro del nodo actual
+Libro& operator*(const Iterador_Libros& it);
+ 
+// Pre: true
+// Post: avanza el iterador al siguiente nodo, devuelve el iterador actualizado
+Iterador_Libros& operator++(Iterador_Libros& it); // operador ++ a la izquierda (++it)
+ 
+// Pre: true
+// Post: devuelve true si los dos iteradores NO apuntan al mismo nodo
+bool operator!=(const Iterador_Libros& it1, const Iterador_Libros& it2);
+ 
+// Pre: true
+// Post: devuelve true si los dos iteradores apuntan al mismo nodo
+bool operator==(const Iterador_Libros& it1, const Iterador_Libros& it2);
+ 
+// Pre: true
+// Post: devuelve iterador al primer elemento del conjunto
+Iterador_Libros begin(const Libros& libros);
+ 
+// Pre: true
+// Post: devuelve iterador al elemento proximo del ultimo (NULL)
+Iterador_Libros end(const Libros& libros);
+
+
+
+//--- OPERACIONES DEL TDA LIBROS ------------------------------------
+
 /*
 * crear_conj_libros()
 * Descripción: Crea un conjunto (lista) vacío de libros

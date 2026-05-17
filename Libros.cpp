@@ -103,7 +103,16 @@ void eliminar_libro (Libros& libros, const ClaveLibro& clave){
 * Precondición: el libro cuya clave es clave debe estar en libros
 * Postcondición: Devuelve true si existe al menos 1 ejemplar del libro cuya clave es clave
 */
-bool hay_ejemplares (const Libros& libros, const ClaveLibro& clave); 
+bool hay_ejemplares (const Libros& libros, const ClaveLibro& clave){    
+    NodoLibro* temp = libros.primero;
+    while (temp != NULL) {
+        if (es_clave(temp->data, clave)) {
+            if (temp->data.num_ejem > 0) return true; // tiene ejemplares?
+        }
+        temp = temp->proximo;
+    }
+    return false; // no encontrado
+}
 
 
 /*
